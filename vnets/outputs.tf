@@ -13,11 +13,3 @@ output "resources_snet_id" {
     if subnet.name == "ResourcesSubnet"
   ], 0)
 }
-
-output "hub_vnet_id" {
-  value = azurerm_virtual_network.vnet_hub.id
-}
-
-output "hub_vnet_name" {
-  value = azurerm_virtual_network.vnet_hub.name
-}
