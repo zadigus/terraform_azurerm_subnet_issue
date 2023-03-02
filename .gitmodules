@@ -1,0 +1,3 @@
+[submodule ".teamcity/shared"]
+	path = .teamcity/shared
+	url = ssh://git@usaw-bitbucketp01.pc.cognex.com:7999/mdl/teamcity-shared.git
