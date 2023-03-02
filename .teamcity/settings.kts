@@ -39,7 +39,7 @@ project {
     params {
         param("teamcity.ui.settings.readOnly", "true")
         param("env.JIRA_PROJECT_ID", "master")
-        param("env.PROJECT_NAME", "private-aks")
+        param("env.PROJECT_NAME", "storage-account-issue")
         param("env.ARTIFACTORY_URL", "%system.artifactory.registry.url%")
         param("env.PIP_EXTRA_INDEX_URL", "%system.pypi-public.server.address.login%")
         param("env.TF_VAR_ARM_CLIENT_ID", "%env.ARM_CLIENT_ID%")
@@ -49,19 +49,7 @@ project {
         param("env.TF_VAR_ARM_TENANT_ID", "%env.ARM_TENANT_ID%")
         param("env.TF_VAR_ARM_AUTH_CLIENT_ID", "%env.ARM_AUTH_CLIENT_ID%")
         param("env.TF_VAR_ARM_AUTH_CLIENT_SECRET", "%env.ARM_AUTH_CLIENT_SECRET%")
-        param("env.TF_VAR_kubernetes_version", "1.25.5")
-        // the version should be listed here:
-        //  https://hub.docker.com/r/bitnami/postgresql/tags
-        // and its major version must be supported by azure
-        param("env.POSTGRESQL_VERSION", "13.8.0")
-        param("env.TF_VAR_aks_cpu_node_pool_min_count", "1")
-        param("env.TF_VAR_aks_cpu_node_pool_max_count", "3")
-        param("env.TF_VAR_aks_gpu_node_pool_min_count", "1")
-        param("env.TF_VAR_aks_gpu_node_pool_max_count", "3")
         param("env.TF_VAR_location", "eastus")
-        param("env.STORAGE_CONTAINERS", "images,image-cache,status,cartel-msg,plus-minus-click")
-        param("env.TF_VAR_bastion_username", "lmichel")
-        param("env.TF_VAR_bastion_password", "9TJzf8s8kYQSFm5QW9znhtc7Dz8NEkvzx8RMSF248U")
     }
 
     template(ArtifactoryDockerLogin)
