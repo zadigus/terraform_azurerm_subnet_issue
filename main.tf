@@ -37,9 +37,6 @@ module "storage_accounts" {
   account_tier        = var.storage_acc_account_tier
   replication_type    = var.storage_acc_replication_type
   tags                = merge(local.tags, var.storage_acc_tags)
-  subnet_id           = module.vnets.resources_snet_id
-  vnet_id             = module.vnets.hub_vnet_id
-  vnet_name           = module.vnets.hub_vnet_name
   aks_subnet_ids      = [module.vnets.aks_snet_id]
   allowed_ips         = [var.teamcity_agent_ip]
 }
