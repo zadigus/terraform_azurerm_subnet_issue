@@ -30,6 +30,15 @@ class TerraformDeployBuild(
 
     steps {
         publishJiraProjectId(scriptPath)
+        script {
+            name = "Publish Teamcity Agent IP"
+            scriptContent = """
+                #! /bin/sh
+                
+                AGENT_IP=$(curl ifconfig.me)
+                echo "##teamcity[setParameter name='env.TF_VAR_teamcity_agent_ip' value='${'$'}AGENT_IP']"
+            """.trimIndent()
+        }
         publishTerraformVariables(scriptPath)
         terraformConfig(scriptPath, dockerImage, deploymentWorkingDirectory)
         terraformDeploy(scriptPath, dockerImage, deploymentWorkingDirectory)
