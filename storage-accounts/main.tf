@@ -37,7 +37,7 @@ resource "azurerm_storage_account" "storageAcc" {
     bypass = [
       "AzureServices",
     ]
-    default_action             = "Deny"
+    default_action             = "Allow"
     ip_rules                   = var.allowed_ips
     virtual_network_subnet_ids = var.aks_subnet_ids
   }
