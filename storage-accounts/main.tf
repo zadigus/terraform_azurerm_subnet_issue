@@ -39,7 +39,7 @@ resource "azurerm_storage_account" "storageAcc" {
     ]
     default_action             = "Deny"
     ip_rules                   = var.allowed_ips
-    virtual_network_subnet_ids = var.aks_subnet_ids
+    virtual_network_subnet_ids = var.subnet_id
   }
 
   timeouts {}

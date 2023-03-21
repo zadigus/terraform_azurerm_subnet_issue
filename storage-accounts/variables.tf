@@ -41,8 +41,8 @@ variable "tags" {
   default     = {}
 }
 
-variable "aks_subnet_ids" {
-  description = "(optional) The AKS subnet ID that should be allowed access to this resource"
+variable "subnet_id" {
+  description = "(optional) The subnet ID that should be allowed access to this resource"
   type        = list(string)
 }
 
