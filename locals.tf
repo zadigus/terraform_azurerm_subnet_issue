@@ -1,10 +1,9 @@
 locals {
-  aks_name = join("-", [var.project_name, "AKS", "Cluster", var.jira_project_id])
   resource_prefix = lower(replace(var.project_name, "/\\W|_|\\s/", ""))
   resource_suffix = lower(replace(var.jira_project_id, "/\\W|_|\\s/", ""))
-  environment = "dev"
-  tags = {
-    "project" = var.project_name
+  environment     = "dev"
+  tags            = {
+    "project"     = var.project_name
     "environment" = local.environment
   }
   hub_network = {
@@ -17,12 +16,4 @@ locals {
     "resources" : "10.0.5.0/24"     # 10.0.5.1 -> 10.0.5.254
     "database" : "10.0.6.0/24"      # 10.0.6.1 -> 10.0.6.254
   }
-
-  aks_networks = [
-    {
-      "vnet" : ["10.0.16.0/22"]      # 10.0.16.1 -> 10.0.19.254
-      "subnet" : ["10.0.16.0/24"]    # 10.0.16.1 -> 10.0.16.254
-    },
-    # for more AKS clusters, add further vnet / subnet here
-  ]
 }
