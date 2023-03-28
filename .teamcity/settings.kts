@@ -39,7 +39,7 @@ project {
     params {
         param("teamcity.ui.settings.readOnly", "true")
         param("env.JIRA_PROJECT_ID", "master")
-        param("env.PROJECT_NAME", "staccissue")
+        param("env.PROJECT_NAME", "subnetissue")
         param("env.ARTIFACTORY_URL", "%system.artifactory.registry.url%")
         param("env.PIP_EXTRA_INDEX_URL", "%system.pypi-public.server.address.login%")
         param("env.TF_VAR_ARM_CLIENT_ID", "%env.ARM_CLIENT_ID%")

@@ -9,11 +9,12 @@ module "nsg" {
   depends_on = [module.resource_group]
   source     = "./nsg"
 
-  name_prefix         = local.resource_prefix
-  name_suffix         = local.resource_suffix
-  location            = var.location
-  resource_group_name = module.resource_group.resource_group_name
-  tags                = local.tags
+  name_prefix                  = local.resource_prefix
+  name_suffix                  = local.resource_suffix
+  location                     = var.location
+  resource_group_name          = module.resource_group.resource_group_name
+  tags                         = local.tags
+  bastion_subnet_address_space = local.hub_network["bastion"]
 }
 
 module "vnets" {
@@ -22,21 +23,10 @@ module "vnets" {
 
   location              = var.location
   resource_group_name   = module.resource_group.resource_group_name
+  bastion_subnet_nsg_id = module.nsg.bastion_subnet_nsg_id
+  jumpbox_subnet_nsg_id = module.nsg.jumpbox_subnet_nsg_id
   private_subnet_nsg_id = module.nsg.private_subnet_nsg_id
+  hub_network           = local.hub_network
+  aks_networks          = local.aks_networks
   tags                  = local.tags
-}
-
-module "storage_accounts" {
-  depends_on = [module.resource_group, module.vnets]
-  source     = "./storage-accounts"
-
-  resource_group_name = module.resource_group.resource_group_name
-  name_prefix         = local.resource_prefix
-  name_suffix         = local.resource_suffix
-  location            = var.location
-  account_tier        = var.storage_acc_account_tier
-  replication_type    = var.storage_acc_replication_type
-  tags                = merge(local.tags, var.storage_acc_tags)
-  subnet_id           = [module.vnets.storage_snet_id]
-  allowed_ips         = [var.teamcity_agent_ip]
 }

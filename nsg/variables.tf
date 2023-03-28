@@ -23,3 +23,8 @@ variable "tags" {
   type        = map(any)
   default     = {}
 }
+
+variable "bastion_subnet_address_space" {
+  description = "(required) Bastion Subnet Address Space"
+  type        = string
+}
