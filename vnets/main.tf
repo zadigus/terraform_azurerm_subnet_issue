@@ -12,6 +12,10 @@ resource "azurerm_subnet" "fw" {
   resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.vnet_hub.name
   address_prefixes     = [var.hub_network["firewall"]]
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "azurerm_subnet" "gw" {
@@ -19,6 +23,10 @@ resource "azurerm_subnet" "gw" {
   resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.vnet_hub.name
   address_prefixes     = [var.hub_network["vpn_gateway"]]
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "azurerm_subnet" "jumpbox" {
@@ -26,6 +34,10 @@ resource "azurerm_subnet" "jumpbox" {
   resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.vnet_hub.name
   address_prefixes     = [var.hub_network["jumpbox"]]
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "azurerm_subnet" "bastion" {
@@ -33,6 +45,10 @@ resource "azurerm_subnet" "bastion" {
   resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.vnet_hub.name
   address_prefixes     = [var.hub_network["bastion"]]
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "azurerm_subnet" "resources" {
@@ -40,6 +56,10 @@ resource "azurerm_subnet" "resources" {
   resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.vnet_hub.name
   address_prefixes     = [var.hub_network["resources"]]
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "azurerm_subnet" "inbound_dns" {
@@ -58,6 +78,10 @@ resource "azurerm_subnet" "inbound_dns" {
       ]
     }
   }
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "azurerm_subnet" "psql" {
@@ -75,5 +99,9 @@ resource "azurerm_subnet" "psql" {
         "Microsoft.Network/virtualNetworks/subnets/join/action",
       ]
     }
+  }
+
+  lifecycle {
+    prevent_destroy = true
   }
 }
