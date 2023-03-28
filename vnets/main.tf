@@ -5,35 +5,41 @@ resource "azurerm_virtual_network" "vnet_hub" {
   address_space       = [var.hub_network["vnet"]]
 
   tags = var.tags
+}
 
-  subnet {
-    # this subnet is special for azure; it must have this name
-    # and cannot be provided with a network security group
-    name           = local.fw_subnet_name
-    address_prefix = var.hub_network["firewall"]
-  }
+resource "azurerm_subnet" "fw" {
+  name                 = local.fw_subnet_name
+  resource_group_name  = var.resource_group_name
+  virtual_network_name = azurerm_virtual_network.vnet_hub.name
+  address_prefixes     = [var.hub_network["firewall"]]
+}
 
-  subnet {
-    name           = local.vpn_gateway_subnet_name
-    address_prefix = var.hub_network["vpn_gateway"]
-  }
+resource "azurerm_subnet" "gw" {
+  name                 = local.vpn_gateway_subnet_name
+  resource_group_name  = var.resource_group_name
+  virtual_network_name = azurerm_virtual_network.vnet_hub.name
+  address_prefixes     = [var.hub_network["vpn_gateway"]]
+}
 
-  subnet {
-    name           = local.jumpbox_subnet_name
-    address_prefix = var.hub_network["jumpbox"]
-  }
+resource "azurerm_subnet" "jumpbox" {
+  name                 = local.jumpbox_subnet_name
+  resource_group_name  = var.resource_group_name
+  virtual_network_name = azurerm_virtual_network.vnet_hub.name
+  address_prefixes     = [var.hub_network["jumpbox"]]
+}
 
-  subnet {
-    # this name must be AzureBastionSubnet, otherwise, it doesn't work
-    # azure won't accept another name
-    name           = local.azure_bastion_subnet_name
-    address_prefix = var.hub_network["bastion"]
-  }
+resource "azurerm_subnet" "bastion" {
+  name                 = local.azure_bastion_subnet_name
+  resource_group_name  = var.resource_group_name
+  virtual_network_name = azurerm_virtual_network.vnet_hub.name
+  address_prefixes     = [var.hub_network["bastion"]]
+}
 
-  subnet {
-    name           = local.resources_subnet_name
-    address_prefix = var.hub_network["resources"]
-  }
+resource "azurerm_subnet" "resources" {
+  name                 = local.resources_subnet_name
+  resource_group_name  = var.resource_group_name
+  virtual_network_name = azurerm_virtual_network.vnet_hub.name
+  address_prefixes     = [var.hub_network["resources"]]
 }
 
 resource "azurerm_subnet" "inbound_dns" {
@@ -52,10 +58,6 @@ resource "azurerm_subnet" "inbound_dns" {
       ]
     }
   }
-
-  lifecycle {
-    prevent_destroy = true
-  }
 }
 
 resource "azurerm_subnet" "psql" {
@@ -73,9 +75,5 @@ resource "azurerm_subnet" "psql" {
         "Microsoft.Network/virtualNetworks/subnets/join/action",
       ]
     }
-  }
-
-  lifecycle {
-    prevent_destroy = true
   }
 }

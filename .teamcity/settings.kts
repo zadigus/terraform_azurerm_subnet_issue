@@ -50,7 +50,7 @@ project {
         param("env.TF_VAR_ARM_AUTH_CLIENT_ID", "%env.ARM_AUTH_CLIENT_ID%")
         param("env.TF_VAR_ARM_AUTH_CLIENT_SECRET", "%env.ARM_AUTH_CLIENT_SECRET%")
         param("env.TF_VAR_location", "eastus")
-        param("env.TF_LOG", "TRACE")
+//        param("env.TF_LOG", "TRACE")
     }
 
     template(ArtifactoryDockerLogin)
